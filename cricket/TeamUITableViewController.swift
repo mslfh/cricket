@@ -6,40 +6,73 @@
 //
 
 import UIKit
+import Firebase
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 class TeamUITableViewController: UITableViewController {
-
+    var teams = [Team]()
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        let db = Firestore.firestore()
+        let teamCollection = db.collection("teams")
+        teamCollection.getDocuments() { (result, err) in
+            if let err = err
+            {
+                print("Error getting documents: \(err)")
+            }
+            else
+            {
+                for document in result!.documents
+                {
+                    let conversionResult = Result
+                    {
+                        try document.data(as: Team.self)
+                    }
+                    switch conversionResult
+                    {
+                    case .success(let team):
+                        print("Movie: \(team)")
+                        
+                        //NOTE THE ADDITION OF THIS LINE
+                        self.teams.append(team)
+                        
+                    case .failure(let error):
+                        // A `Movie` value could not be initialized from the DocumentSnapshot.
+                        print("Error decoding movie: \(error)")
+                    }
+                }
+                
+                //NOTE THE ADDITION OF THIS LINE
+                self.tableView.reloadData()
+            }
+        }
     }
-
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return teams.count
     }
 
-    /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "TeamUITableViewCell", for: indexPath)
 
-        // Configure the cell...
+        //get the movie for this row
+        let team = teams[indexPath.row]
+
+        if let teamCell = cell as? TeamUITableViewCell
+        {
+            teamCell.titleLabel.text = team.teamName
+        }
 
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
