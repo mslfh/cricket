@@ -2,7 +2,7 @@
 //  TeamUITableViewController.swift
 //  cricket
 //
-//  Created by mobiledev on 17/5/2024.
+//  Created by mobiledev on 18/5/2024.
 //
 
 import UIKit
@@ -11,44 +11,80 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 
 class TeamUITableViewController: UITableViewController {
+
     var teams = [Team]()
+    var filteredTeams = [Team]()
+
+
+    @IBOutlet weak var searchBar: UISearchBar!
+    
+    @IBAction func unwindToMovieList(sender: UIStoryboardSegue) {
+        if let detailScreen = sender.source as? TeamDetailsViewController {
+            if let teamIndex = detailScreen.teamIndex {
+                teams[teamIndex] = detailScreen.team!
+                
+                // If there's a search query, we need to update the filtered teams as well
+                filterTeams(for: searchBar.text ?? "")
+            } else {
+                // If teamIndex is nil, it means it's a new team added
+                teams.append(detailScreen.team!)
+            }
+            
+            tableView.reloadData()
+        }
+    }
+
+    @IBAction func unwindDeleteToMovieList(sender: UIStoryboardSegue) {
+        if let detailScreen = sender.source as? TeamDetailsViewController,
+           let teamIndex = detailScreen.teamIndex {
+            teams.remove(at: teamIndex)
+            
+            // If there's a search query, we need to update the filtered teams as well
+            filterTeams(for: searchBar.text ?? "")
+            
+            tableView.reloadData()
+        }
+    }
+
+    @IBAction func unwindAddToTeamList(sender: UIStoryboardSegue) {
+        // No need to reset teams or call viewDidLoad since the data is already fetched
+     teams = [Team]()
+     filteredTeams = [Team]()
+        fetchTeams()
+    }
+    
+
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        searchBar.delegate = self
+        fetchTeams()
+    }
+    
+    func fetchTeams() {
         let db = Firestore.firestore()
         let teamCollection = db.collection("teams")
         teamCollection.getDocuments() { (result, err) in
-            if let err = err
-            {
+            if let err = err {
                 print("Error getting documents: \(err)")
-            }
-            else
-            {
-                for document in result!.documents
-                {
-                    let conversionResult = Result
-                    {
+            } else {
+                for document in result!.documents {
+                    let conversionResult = Result {
                         try document.data(as: Team.self)
                     }
-                    switch conversionResult
-                    {
+                    switch conversionResult {
                     case .success(let team):
-                        print("Movie: \(team)")
-                        
-                        //NOTE THE ADDITION OF THIS LINE
+                        print(" \(team)")
                         self.teams.append(team)
-                        
                     case .failure(let error):
-                        // A `Movie` value could not be initialized from the DocumentSnapshot.
-                        print("Error decoding movie: \(error)")
+                        print("Error decoding team: \(error)")
                     }
                 }
-                
-                //NOTE THE ADDITION OF THIS LINE
+                self.filteredTeams = self.teams // Initialize filteredTeams with all teams initially
                 self.tableView.reloadData()
             }
         }
     }
-    // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -57,66 +93,68 @@ class TeamUITableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return teams.count
+        return filteredTeams.count
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
+    {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TeamUITableViewCell", for: indexPath)
 
-        //get the movie for this row
-        let team = teams[indexPath.row]
+                let team = filteredTeams[indexPath.row]
 
-        if let teamCell = cell as? TeamUITableViewCell
-        {
-            teamCell.titleLabel.text = team.teamName
-        }
+                if let teamCell = cell as? TeamUITableViewCell {
+                    teamCell.teamNameLabel.text = team.teamName
+                }
 
-        return cell
+                return cell
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            // Delete the row from the data source
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+    
+    
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        super.prepare(for: segue, sender: sender)
+        
+        if segue.identifier == "ShowTeamDetailSegue" {
+            guard let detailViewController = segue.destination as? TeamDetailsViewController else {
+                fatalError("Unexpected destination: \(segue.destination)")
+            }
+            
+            guard let selectedTeamCell = sender as? TeamUITableViewCell else {
+                fatalError("Unexpected sender: \(String(describing: sender))")
+            }
+            
+            guard let indexPath = tableView.indexPath(for: selectedTeamCell) else {
+                fatalError("The selected cell is not being displayed by the table")
+            }
+            
+            let selectedTeam = filteredTeams[indexPath.row] // Retrieve from filteredTeams
+            
+            detailViewController.team = selectedTeam
+            detailViewController.teamIndex = indexPath.row
+        }
     }
-    */
+    
 
 }
+    // MARK: - UISearchBarDelegate
+
+    extension TeamUITableViewController: UISearchBarDelegate {
+        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+            filterTeams(for: searchText)
+        }
+
+        func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+            searchBar.text = ""
+            filterTeams(for: "")
+            searchBar.resignFirstResponder()
+        }
+
+        func filterTeams(for searchText: String) {
+            if searchText.isEmpty {
+                filteredTeams = teams
+            } else {
+                filteredTeams = teams.filter { $0.teamName.lowercased().contains(searchText.lowercased()) }
+            }
+            tableView.reloadData()
+        }
+    }
