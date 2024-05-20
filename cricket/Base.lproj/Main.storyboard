@@ -31,19 +31,32 @@
         <!--Matches-->
         <scene sceneID="jrN-mR-kwl">
             <objects>
-                <tableViewController id="CmP-8j-Aje" sceneMemberID="viewController">
+                <tableViewController id="CmP-8j-Aje" customClass="MatchUITableViewController" customModule="cricket" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" id="JDt-Bz-aCl">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="KgB-tt-ai8">
-                                <rect key="frame" x="0.0" y="50" width="393" height="43.666667938232422"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="MatchUITableViewCell" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MatchUITableViewCell" rowHeight="60" id="KgB-tt-ai8" customClass="MatchUITableViewCell" customModule="cricket" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="50" width="393" height="60"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="KgB-tt-ai8" id="rhN-9B-scF">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="60"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ncb-Vc-Ioe">
+                                            <rect key="frame" x="50" y="20" width="42" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="MatchNameLabel" destination="Ncb-Vc-Ioe" id="Deq-H5-LdP"/>
+                                    <segue destination="Sbh-d8-5Pw" kind="show" identifier="ShowMatchDetailSegue" id="kIg-9v-wjA"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -51,11 +64,29 @@
                             <outlet property="delegate" destination="CmP-8j-Aje" id="C9X-lW-X6O"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Matches" id="DKo-Wi-c66"/>
+                    <navigationItem key="navigationItem" title="Matches" id="DKo-Wi-c66">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="plus" catalog="system" id="UeR-Vg-H6a"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8sg-g4-op6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-520" y="-1222"/>
+        </scene>
+        <!--Match Details View Controller-->
+        <scene sceneID="aIg-ft-RjB">
+            <objects>
+                <viewController id="Sbh-d8-5Pw" customClass="MatchDetailsViewController" customModule="cricket" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Zly-O4-GDj">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="7zJ-c5-pp9"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="NJv-Mu-peP"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3gc-8S-nJ2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="259" y="-1223"/>
         </scene>
         <!--Match-->
         <scene sceneID="BjE-SV-wHD">
@@ -63,7 +94,6 @@
                 <navigationController id="gHb-2k-s8v" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Match" image="note.text" catalog="system" id="HSC-Vh-JDg"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="taj-iN-ill">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -172,7 +202,6 @@
                 <navigationController id="w56-dT-XIu" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Player" image="person" catalog="system" id="Oge-zh-QYQ"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Osp-tz-Chq">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -218,7 +247,6 @@
                 <navigationController id="Cxh-ZT-PwH" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="History" image="clock" catalog="system" id="VB8-qe-tX3"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="SeC-1O-l49">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -339,7 +367,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lwO-Ub-Vmv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="4dS-zQ-wNG" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="348.85496183206106" y="-12.67605633802817"/>
+            <point key="canvasLocation" x="349" y="161"/>
         </scene>
         <!--Team Details View Controller-->
         <scene sceneID="O5s-0T-vul">
@@ -411,7 +439,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x2B-ch-lXH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="HuP-21-4YM" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="349" y="-677"/>
+            <point key="canvasLocation" x="349" y="-544"/>
         </scene>
         <!--Team-->
         <scene sceneID="MFd-YK-EiL">
@@ -419,7 +447,6 @@
                 <navigationController id="u5I-Af-T7M" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Team" image="person.2" catalog="system" id="ssf-J3-x9C"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="OeS-ng-pGj">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>

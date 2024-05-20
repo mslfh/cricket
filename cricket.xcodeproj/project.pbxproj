@@ -7,7 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5C7A64E82BF8681800D7A565 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C7A64E72BF8681800D7A565 /* GoogleService-Info.plist */; };
+		5C799ADF2BFB234900C50AD2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C799ADE2BFB234900C50AD2 /* GoogleService-Info.plist */; };
+		5C799AE12BFB251D00C50AD2 /* MatchUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C799AE02BFB251D00C50AD2 /* MatchUITableViewController.swift */; };
+		5C799AE32BFB254200C50AD2 /* MatchUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C799AE22BFB254200C50AD2 /* MatchUITableViewCell.swift */; };
+		5C799AE52BFB27F000C50AD2 /* MatchDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C799AE42BFB27F000C50AD2 /* MatchDetailsViewController.swift */; };
 		5C7A64EB2BF8693E00D7A565 /* TeamUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7A64EA2BF8693E00D7A565 /* TeamUITableViewCell.swift */; };
 		5C7A64ED2BF86A9300D7A565 /* TeamUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7A64EC2BF86A9300D7A565 /* TeamUITableViewController.swift */; };
 		5C7A64EF2BF8725000D7A565 /* TeamDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7A64EE2BF8725000D7A565 /* TeamDetailsViewController.swift */; };
@@ -57,7 +60,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5C7A64E72BF8681800D7A565 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5C799ADE2BFB234900C50AD2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5C799AE02BFB251D00C50AD2 /* MatchUITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchUITableViewController.swift; sourceTree = "<group>"; };
+		5C799AE22BFB254200C50AD2 /* MatchUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchUITableViewCell.swift; sourceTree = "<group>"; };
+		5C799AE42BFB27F000C50AD2 /* MatchDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchDetailsViewController.swift; sourceTree = "<group>"; };
 		5C7A64EA2BF8693E00D7A565 /* TeamUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamUITableViewCell.swift; sourceTree = "<group>"; };
 		5C7A64EC2BF86A9300D7A565 /* TeamUITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamUITableViewController.swift; sourceTree = "<group>"; };
 		5C7A64EE2BF8725000D7A565 /* TeamDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamDetailsViewController.swift; sourceTree = "<group>"; };
@@ -138,7 +144,7 @@
 		5C929E8B2BF6FF8F0096CD95 /* cricket */ = {
 			isa = PBXGroup;
 			children = (
-				5C7A64E72BF8681800D7A565 /* GoogleService-Info.plist */,
+				5C799ADE2BFB234900C50AD2 /* GoogleService-Info.plist */,
 				5C929EDD2BF702DF0096CD95 /* entity */,
 				5C929E8C2BF6FF8F0096CD95 /* AppDelegate.swift */,
 				5C929E8E2BF6FF8F0096CD95 /* SceneDelegate.swift */,
@@ -154,6 +160,9 @@
 				5C7A64F22BF87F7300D7A565 /* PlayerUITableViewCell.swift */,
 				5C7A64F42BF87F8E00D7A565 /* PlayerDetailsViewController.swift */,
 				5C7A64F62BF890EE00D7A565 /* TeamAddViewController.swift */,
+				5C799AE02BFB251D00C50AD2 /* MatchUITableViewController.swift */,
+				5C799AE22BFB254200C50AD2 /* MatchUITableViewCell.swift */,
+				5C799AE42BFB27F000C50AD2 /* MatchDetailsViewController.swift */,
 			);
 			path = cricket;
 			sourceTree = "<group>";
@@ -262,7 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C929E992BF6FF910096CD95 /* LaunchScreen.storyboard in Resources */,
-				5C7A64E82BF8681800D7A565 /* GoogleService-Info.plist in Resources */,
+				5C799ADF2BFB234900C50AD2 /* GoogleService-Info.plist in Resources */,
 				5C929E962BF6FF910096CD95 /* Assets.xcassets in Resources */,
 				5C929E942BF6FF8F0096CD95 /* Main.storyboard in Resources */,
 			);
@@ -285,10 +294,13 @@
 				5C7A64F72BF890EE00D7A565 /* TeamAddViewController.swift in Sources */,
 				5C929EDF2BF702FF0096CD95 /* Team.swift in Sources */,
 				5C7A64EF2BF8725000D7A565 /* TeamDetailsViewController.swift in Sources */,
+				5C799AE12BFB251D00C50AD2 /* MatchUITableViewController.swift in Sources */,
 				5C929EE12BF703090096CD95 /* Player.swift in Sources */,
 				5C7A64F52BF87F8E00D7A565 /* PlayerDetailsViewController.swift in Sources */,
 				5C7A64ED2BF86A9300D7A565 /* TeamUITableViewController.swift in Sources */,
+				5C799AE52BFB27F000C50AD2 /* MatchDetailsViewController.swift in Sources */,
 				5C7A64F12BF87F5F00D7A565 /* PlayerUITableViewController.swift in Sources */,
+				5C799AE32BFB254200C50AD2 /* MatchUITableViewCell.swift in Sources */,
 				5C929EDA2BF6FFF00096CD95 /* Match.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
