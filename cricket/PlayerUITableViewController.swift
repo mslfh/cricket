@@ -33,12 +33,15 @@ class PlayerUITableViewController: UITableViewController {
     
     @IBAction func unwindDeleteToList(sender: UIStoryboardSegue)
     {
-        if let detailScreen = sender.source as? PlayerDetailsViewController
-        {
-            players.remove(at: detailScreen.playerIndex!)
-            filterPlayers(for: searchBar.text ?? "")
-            tableView.reloadData()
-        }
+        if let detailScreen = sender.source as? PlayerDetailsViewController {
+                if let playerIndex = detailScreen.playerIndex {
+                    if let filteredIndex = players.firstIndex(where: { $0.documentID == detailScreen.player?.documentID }) {
+                        players.remove(at: filteredIndex)
+                    }
+                }
+                filterPlayers(for: searchBar.text ?? "")
+                tableView.reloadData()
+            }
     }
 
     @IBAction func unwindAddToPlayerList(sender: UIStoryboardSegue) {

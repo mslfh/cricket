@@ -19,7 +19,6 @@ class TeamUITableViewController: UITableViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     
     @IBAction func unwindToTeamList(sender: UIStoryboardSegue) {
-        
         if let detailScreen = sender.source as? TeamDetailsViewController {
                 if let teamIndex = detailScreen.teamIndex {
                     if let filteredIndex = teams.firstIndex(where: { $0.documentID == detailScreen.team?.documentID }) {
@@ -32,15 +31,17 @@ class TeamUITableViewController: UITableViewController {
     }
 
     @IBAction func unwindDeleteToTeamList(sender: UIStoryboardSegue) {
-        if let detailScreen = sender.source as? TeamDetailsViewController,
-           let teamIndex = detailScreen.teamIndex {
-            teams.remove(at: teamIndex)
-            
-            // If there's a search query, we need to update the filtered teams as well
+        
+        if let detailScreen = sender.source as? TeamDetailsViewController {
+                if let teamIndex = detailScreen.teamIndex {
+                    if let filteredIndex = teams.firstIndex(where: { $0.documentID == detailScreen.team?.documentID }) {
+                        teams.remove(at: filteredIndex)
+                    }
+                }
             filterTeams(for: searchBar.text ?? "")
-            
-            tableView.reloadData()
-        }
+                tableView.reloadData()
+            }
+        
     }
 
     @IBAction func unwindAddToTeamList(sender: UIStoryboardSegue) {
