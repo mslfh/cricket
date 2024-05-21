@@ -13,14 +13,21 @@ import FirebaseFirestoreSwift
 class PlayerUITableViewController: UITableViewController {
 
     var players = [Player]()
+    var filteredPlayers = [Player]()
+    
+    @IBOutlet weak var searchBar: UISearchBar!
     
     @IBAction func unwindToList(sender: UIStoryboardSegue)
     {
-        if let detailScreen = sender.source as? PlayerDetailsViewController
-        {
-            players[detailScreen.playerIndex!] = detailScreen.player!
-            tableView.reloadData()
-        }
+        if let detailScreen = sender.source as? PlayerDetailsViewController {
+                if let playerIndex = detailScreen.playerIndex {
+                    if let filteredIndex = players.firstIndex(where: { $0.documentID == detailScreen.player?.documentID }) {
+                        players[filteredIndex] = detailScreen.player!
+                    }
+                }
+                filterPlayers(for: searchBar.text ?? "")
+                tableView.reloadData()
+            }
     }
     
     
@@ -29,50 +36,50 @@ class PlayerUITableViewController: UITableViewController {
         if let detailScreen = sender.source as? PlayerDetailsViewController
         {
             players.remove(at: detailScreen.playerIndex!)
+            filterPlayers(for: searchBar.text ?? "")
             tableView.reloadData()
         }
     }
 
+    @IBAction func unwindAddToPlayerList(sender: UIStoryboardSegue) {
+        
+        players = [Player]()
+        filteredPlayers = [Player]()
+        fetchPlayers()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        searchBar.delegate = self
+        fetchPlayers()
+    }
+
+    func fetchPlayers() {
         let db = Firestore.firestore()
         let playerCollection = db.collection("players")
         playerCollection.getDocuments() { (result, err) in
-            if let err = err
-            {
+            if let err = err {
                 print("Error getting documents: \(err)")
-            }
-            else
-            {
-                for document in result!.documents
-                {
-                    let conversionResult = Result
-                    {
+            } else {
+                for document in result!.documents {
+                    let conversionResult = Result {
                         try document.data(as: Player.self)
                     }
-                    switch conversionResult
-                    {
+                    switch conversionResult {
                     case .success(let player):
-                        print("\(player)")
-                        
-                        //NOTE THE ADDITION OF THIS LINE
                         self.players.append(player)
-                        
                     case .failure(let error):
-                     
-                        print("Error decoding \(error)")
+                        print("Error decoding team: \(error)")
                     }
                 }
-                
-                //NOTE THE ADDITION OF THIS LINE
+                self.filteredPlayers = self.players // Initialize filteredTeams with all teams initially
                 self.tableView.reloadData()
             }
         }
     }
-
-
+    
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -80,14 +87,15 @@ class PlayerUITableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return players.count
+        return filteredPlayers.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "PlayerUITableViewCell", for: indexPath)
 
-        let player = players[indexPath.row]
+        let player = filteredPlayers[indexPath.row]
 
         if let playerCell = cell as? PlayerUITableViewCell
         {
@@ -126,7 +134,7 @@ class PlayerUITableViewController: UITableViewController {
               }
 
               //work out which movie it is using the row number
-              let selectedPlayers = players[indexPath.row]
+              let selectedPlayers = filteredPlayers[indexPath.row]
 
               //send it to the details screen
               detailViewController.player = selectedPlayers
@@ -135,4 +143,26 @@ class PlayerUITableViewController: UITableViewController {
     }
     
 
+}
+// MARK: - UISearchBarDelegate
+
+extension PlayerUITableViewController: UISearchBarDelegate {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        filterPlayers(for: searchText)
+    }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.text = ""
+        filterPlayers(for: "")
+        searchBar.resignFirstResponder()
+    }
+
+    func filterPlayers(for searchText: String) {
+        if searchText.isEmpty {
+            filteredPlayers = players
+        } else {
+            filteredPlayers = players.filter { $0.name.lowercased().contains(searchText.lowercased()) }
+        }
+        tableView.reloadData()
+    }
 }

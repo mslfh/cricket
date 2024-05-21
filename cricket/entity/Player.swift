@@ -14,6 +14,6 @@ public struct Player : Codable
 {
     @DocumentID var documentID:String?
     var name:String
-    var description:String
-    var image64encode:String
+    var description:String?
+    var image64encode:String?
 }

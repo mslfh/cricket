@@ -15,7 +15,7 @@ class MatchUITableViewController: UITableViewController {
 
     var matches = [Match]()
     
-    @IBAction func unwindToList(sender: UIStoryboardSegue)
+    @IBAction func unwindToMatchList(sender: UIStoryboardSegue)
     {
         if let detailScreen = sender.source as? MatchDetailsViewController
         {
@@ -24,8 +24,7 @@ class MatchUITableViewController: UITableViewController {
         }
     }
     
-    
-    @IBAction func unwindDeleteToList(sender: UIStoryboardSegue)
+    @IBAction func unwindDeleteToMatchList(sender: UIStoryboardSegue)
     {
         if let detailScreen = sender.source as? MatchDetailsViewController
         {
@@ -34,6 +33,14 @@ class MatchUITableViewController: UITableViewController {
         }
     }
 
+    @IBAction func unwindAddToMatchList(sender: UIStoryboardSegue) {
+        // No need to reset teams or call viewDidLoad since the data is already fetched
+        print("already fetched")
+        matches = [Match]()
+        viewDidLoad()
+    }
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

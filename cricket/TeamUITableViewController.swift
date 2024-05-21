@@ -18,23 +18,20 @@ class TeamUITableViewController: UITableViewController {
 
     @IBOutlet weak var searchBar: UISearchBar!
     
-    @IBAction func unwindToMovieList(sender: UIStoryboardSegue) {
+    @IBAction func unwindToTeamList(sender: UIStoryboardSegue) {
+        
         if let detailScreen = sender.source as? TeamDetailsViewController {
-            if let teamIndex = detailScreen.teamIndex {
-                teams[teamIndex] = detailScreen.team!
-                
-                // If there's a search query, we need to update the filtered teams as well
-                filterTeams(for: searchBar.text ?? "")
-            } else {
-                // If teamIndex is nil, it means it's a new team added
-                teams.append(detailScreen.team!)
+                if let teamIndex = detailScreen.teamIndex {
+                    if let filteredIndex = teams.firstIndex(where: { $0.documentID == detailScreen.team?.documentID }) {
+                        teams[filteredIndex] = detailScreen.team!
+                    }
+                }
+            filterTeams(for: searchBar.text ?? "")
+                tableView.reloadData()
             }
-            
-            tableView.reloadData()
-        }
     }
 
-    @IBAction func unwindDeleteToMovieList(sender: UIStoryboardSegue) {
+    @IBAction func unwindDeleteToTeamList(sender: UIStoryboardSegue) {
         if let detailScreen = sender.source as? TeamDetailsViewController,
            let teamIndex = detailScreen.teamIndex {
             teams.remove(at: teamIndex)
@@ -48,8 +45,8 @@ class TeamUITableViewController: UITableViewController {
 
     @IBAction func unwindAddToTeamList(sender: UIStoryboardSegue) {
         // No need to reset teams or call viewDidLoad since the data is already fetched
-     teams = [Team]()
-     filteredTeams = [Team]()
+        teams = [Team]()
+        filteredTeams = [Team]()
         fetchTeams()
     }
     
