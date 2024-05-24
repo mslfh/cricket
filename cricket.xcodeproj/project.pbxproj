@@ -59,6 +59,8 @@
 		5C929EE12BF703090096CD95 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C929EE02BF703090096CD95 /* Player.swift */; };
 		5C929EE32BF703120096CD95 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C929EE22BF703120096CD95 /* History.swift */; };
 		5C929EE52BF703F10096CD95 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C929EE42BF703F10096CD95 /* Ball.swift */; };
+		5CB1EE742C0043B200093775 /* TeamSelectPlayerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB1EE732C0043B200093775 /* TeamSelectPlayerTableViewController.swift */; };
+		5CB1EE762C00442B00093775 /* TeamSelectPlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB1EE752C00442B00093775 /* TeamSelectPlayerTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +90,8 @@
 		5C929EE02BF703090096CD95 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		5C929EE22BF703120096CD95 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		5C929EE42BF703F10096CD95 /* Ball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
+		5CB1EE732C0043B200093775 /* TeamSelectPlayerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectPlayerTableViewController.swift; sourceTree = "<group>"; };
+		5CB1EE752C00442B00093775 /* TeamSelectPlayerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectPlayerTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +165,8 @@
 				5C7A64EC2BF86A9300D7A565 /* TeamUITableViewController.swift */,
 				5C7A64EE2BF8725000D7A565 /* TeamDetailsViewController.swift */,
 				5C7A64F62BF890EE00D7A565 /* TeamAddViewController.swift */,
+				5CB1EE732C0043B200093775 /* TeamSelectPlayerTableViewController.swift */,
+				5CB1EE752C00442B00093775 /* TeamSelectPlayerTableViewCell.swift */,
 				5C7A64F02BF87F5F00D7A565 /* PlayerUITableViewController.swift */,
 				5C7A64F22BF87F7300D7A565 /* PlayerUITableViewCell.swift */,
 				5C7A64F42BF87F8E00D7A565 /* PlayerDetailsViewController.swift */,
@@ -294,6 +300,7 @@
 				5C929EE52BF703F10096CD95 /* Ball.swift in Sources */,
 				5C929E912BF6FF8F0096CD95 /* ViewController.swift in Sources */,
 				5C929E8D2BF6FF8F0096CD95 /* AppDelegate.swift in Sources */,
+				5CB1EE742C0043B200093775 /* TeamSelectPlayerTableViewController.swift in Sources */,
 				5C929EE32BF703120096CD95 /* History.swift in Sources */,
 				5C929E8F2BF6FF8F0096CD95 /* SceneDelegate.swift in Sources */,
 				5C7A64EB2BF8693E00D7A565 /* TeamUITableViewCell.swift in Sources */,
@@ -302,6 +309,7 @@
 				5C7780182BFC9F3100CBA55C /* PlayerAddViewController.swift in Sources */,
 				5C929EDF2BF702FF0096CD95 /* Team.swift in Sources */,
 				5C7A64EF2BF8725000D7A565 /* TeamDetailsViewController.swift in Sources */,
+				5CB1EE762C00442B00093775 /* TeamSelectPlayerTableViewCell.swift in Sources */,
 				5C799AE12BFB251D00C50AD2 /* MatchUITableViewController.swift in Sources */,
 				5C929EE12BF703090096CD95 /* Player.swift in Sources */,
 				5C7A64F52BF87F8E00D7A565 /* PlayerDetailsViewController.swift in Sources */,
