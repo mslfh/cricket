@@ -19,9 +19,9 @@ public struct Match : Codable
     
     var bowlerTeamId: String?
     var bowlerTeamName: String?
-    var bowlerPlayers: [Player]?
+//    var bowlerPlayers: [Player]?
     
     var batterTeamId: String?
     var batterTeamName: String?
-    var batterPlayers: [Player]?
+//    var batterPlayers: [Player]?
 }

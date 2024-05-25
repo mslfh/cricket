@@ -13,6 +13,8 @@ import FirebaseFirestoreSwift
 
 class MatchUITableViewController: UITableViewController {
 
+    
+    
     var matches = [Match]()
     
     @IBAction func unwindToMatchList(sender: UIStoryboardSegue)
@@ -39,6 +41,8 @@ class MatchUITableViewController: UITableViewController {
         matches = [Match]()
         viewDidLoad()
     }
+    
+    
     
     
     
@@ -140,6 +144,12 @@ class MatchUITableViewController: UITableViewController {
             detailViewController.match = selectedMatch
             detailViewController.matchIndex = indexPath.row
         }
+        if segue.identifier == "ShowMatchScoreSegue" {
+                if let matchScoreViewController = segue.destination as? MatchScoreViewController,
+                    let match = sender as? Match {
+                    matchScoreViewController.match = match
+                }
+            }
     }
     
 }

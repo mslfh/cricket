@@ -22,6 +22,9 @@ class MatchDetailsViewController: UIViewController {
     
     @IBOutlet weak var MatchDescriptionField: UITextField!
     
+    @IBOutlet weak var batterTeamLabel: UILabel!
+    
+    @IBOutlet weak var bowlerTeamLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,9 +34,10 @@ class MatchDetailsViewController: UIViewController {
 //            self.navigationItem.title = displayTeam.teamName
             MatchTitleField.text  = displayMatch.title
             MatchDescriptionField.text  = displayMatch.description
-          
+            batterTeamLabel.text = displayMatch.batterTeamName
+            bowlerTeamLabel.text = displayMatch.bowlerTeamName
+            
             }
-        // Do any additional setup after loading the view.
     }
 
     @IBAction func OnSave(_ sender: Any) {
