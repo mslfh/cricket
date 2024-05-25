@@ -9,6 +9,13 @@ import UIKit
 
 class SelectPlayerTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var playerNameLabel: UILabel!
+    
+    
+    @IBOutlet weak var deleteItemButton: UIButton!
+    
+    var onDeleteButtonTapped: (() -> Void)?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,4 +27,9 @@ class SelectPlayerTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    
+    @IBAction func deleteButtonTapped(_ sender: Any) {
+        onDeleteButtonTapped?()
+    }
+    
 }

@@ -8,11 +8,12 @@
 import UIKit
 
 class TeamSelectPlayerTableViewCell: UITableViewCell {
-
     
     @IBOutlet weak var playerNameLabel: UILabel!
     
     @IBOutlet weak var checkButton: UIButton!
+    
+    var player: Player?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -39,29 +40,45 @@ class TeamSelectPlayerTableViewCell: UITableViewCell {
         }
     }
     
-    // Method to handle tap on the cell
     @objc func cellTapped() {
-        isSelected = !isSelected // Toggle the selected state
-        if isSelected {
-            // Update the button state when selected
-            checkButton.isSelected = true
-        } else {
-            // Reset the button state when deselected
-            configureButtonForUnchecked()
+        isSelected = !isSelected
+
+        if let player = player {
+            updateSelectedPlayers(player: player, isSelected: isSelected)
+        }
+
+        checkButton.isSelected = isSelected
+    }
+
+    @objc func checkButtonTapped() {
+        isSelected = !isSelected
+
+        if let player = player {
+            updateSelectedPlayers(player: player, isSelected: isSelected)
+        }
+
+        checkButton.isSelected = isSelected
+    }
+
+    private func updateSelectedPlayers(player: Player, isSelected: Bool) {
+        if let tableViewController = findTableViewController() {
+            if isSelected {
+                tableViewController.selectedPlayers.append(player)
+            } else {
+                tableViewController.selectedPlayers.removeAll(where: { $0.documentID == player.documentID })
+            }
         }
     }
-    
-    // Method to handle the tap event on the checkButton
-    @objc func checkButtonTapped() {
-        isSelected = !isSelected // Toggle the selected state
-        
-        if isSelected {
-            // Update the button state when selected
-            checkButton.isSelected = true
-        } else {
-            // Reset the button state when deselected
-            configureButtonForUnchecked()
+
+    private func findTableViewController() -> TeamSelectPlayerTableViewController? {
+        var view = self.superview
+        while let currentView = view {
+            if let tableViewController = currentView.next as? TeamSelectPlayerTableViewController {
+                return tableViewController
+            }
+            view = currentView.superview
         }
+        return nil
     }
     
     // Configure the button for unchecked state

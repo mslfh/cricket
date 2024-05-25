@@ -13,12 +13,15 @@ import FirebaseFirestoreSwift
 public struct Match : Codable
 {
     @DocumentID var documentID: String?
-//    var bowlerPlayers: [Player]?
-//    var bowlerTeamName: String?
-//    
-//    var batterPlayers: [Player]?
-//    var batterTeamName: String?
     
     var title: String?
     var description: String?
+    
+    var bowlerTeamId: String?
+    var bowlerTeamName: String?
+    var bowlerPlayers: [Player]?
+    
+    var batterTeamId: String?
+    var batterTeamName: String?
+    var batterPlayers: [Player]?
 }

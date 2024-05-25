@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5C0921E92BFC4EAF00E08BBF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C0921E82BFC4EAF00E08BBF /* GoogleService-Info.plist */; };
 		5C0921ED2BFC597200E08BBF /* MatchAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0921EC2BFC597200E08BBF /* MatchAddViewController.swift */; };
+		5C6E4F152C01A64900624435 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5C6E4F142C01A64900624435 /* GoogleService-Info.plist */; };
+		5C6E4F172C01B7F900624435 /* SelectPlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E4F162C01B7F900624435 /* SelectPlayerTableViewCell.swift */; };
+		5C6E4F192C01FCD600624435 /* MatchSelectTeamTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E4F182C01FCD600624435 /* MatchSelectTeamTableViewController.swift */; };
+		5C6E4F1B2C01FD0200624435 /* SelectTeamTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C6E4F1A2C01FD0200624435 /* SelectTeamTableViewCell.swift */; };
 		5C7780182BFC9F3100CBA55C /* PlayerAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C7780172BFC9F3100CBA55C /* PlayerAddViewController.swift */; };
 		5C799AE12BFB251D00C50AD2 /* MatchUITableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C799AE02BFB251D00C50AD2 /* MatchUITableViewController.swift */; };
 		5C799AE32BFB254200C50AD2 /* MatchUITableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C799AE22BFB254200C50AD2 /* MatchUITableViewCell.swift */; };
@@ -64,8 +67,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		5C0921E82BFC4EAF00E08BBF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5C0921EC2BFC597200E08BBF /* MatchAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchAddViewController.swift; sourceTree = "<group>"; };
+		5C6E4F142C01A64900624435 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		5C6E4F162C01B7F900624435 /* SelectPlayerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPlayerTableViewCell.swift; sourceTree = "<group>"; };
+		5C6E4F182C01FCD600624435 /* MatchSelectTeamTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchSelectTeamTableViewController.swift; sourceTree = "<group>"; };
+		5C6E4F1A2C01FD0200624435 /* SelectTeamTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTeamTableViewCell.swift; sourceTree = "<group>"; };
 		5C7780172BFC9F3100CBA55C /* PlayerAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerAddViewController.swift; sourceTree = "<group>"; };
 		5C799AE02BFB251D00C50AD2 /* MatchUITableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchUITableViewController.swift; sourceTree = "<group>"; };
 		5C799AE22BFB254200C50AD2 /* MatchUITableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchUITableViewCell.swift; sourceTree = "<group>"; };
@@ -152,7 +158,7 @@
 		5C929E8B2BF6FF8F0096CD95 /* cricket */ = {
 			isa = PBXGroup;
 			children = (
-				5C0921E82BFC4EAF00E08BBF /* GoogleService-Info.plist */,
+				5C6E4F142C01A64900624435 /* GoogleService-Info.plist */,
 				5C929EDD2BF702DF0096CD95 /* entity */,
 				5C929E8C2BF6FF8F0096CD95 /* AppDelegate.swift */,
 				5C929E8E2BF6FF8F0096CD95 /* SceneDelegate.swift */,
@@ -161,6 +167,7 @@
 				5C929E952BF6FF910096CD95 /* Assets.xcassets */,
 				5C929E972BF6FF910096CD95 /* LaunchScreen.storyboard */,
 				5C929E9A2BF6FF910096CD95 /* Info.plist */,
+				5C6E4F162C01B7F900624435 /* SelectPlayerTableViewCell.swift */,
 				5C7A64EA2BF8693E00D7A565 /* TeamUITableViewCell.swift */,
 				5C7A64EC2BF86A9300D7A565 /* TeamUITableViewController.swift */,
 				5C7A64EE2BF8725000D7A565 /* TeamDetailsViewController.swift */,
@@ -175,6 +182,8 @@
 				5C799AE22BFB254200C50AD2 /* MatchUITableViewCell.swift */,
 				5C799AE42BFB27F000C50AD2 /* MatchDetailsViewController.swift */,
 				5C0921EC2BFC597200E08BBF /* MatchAddViewController.swift */,
+				5C6E4F182C01FCD600624435 /* MatchSelectTeamTableViewController.swift */,
+				5C6E4F1A2C01FD0200624435 /* SelectTeamTableViewCell.swift */,
 			);
 			path = cricket;
 			sourceTree = "<group>";
@@ -283,7 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5C929E992BF6FF910096CD95 /* LaunchScreen.storyboard in Resources */,
-				5C0921E92BFC4EAF00E08BBF /* GoogleService-Info.plist in Resources */,
+				5C6E4F152C01A64900624435 /* GoogleService-Info.plist in Resources */,
 				5C929E962BF6FF910096CD95 /* Assets.xcassets in Resources */,
 				5C929E942BF6FF8F0096CD95 /* Main.storyboard in Resources */,
 			);
@@ -307,8 +316,11 @@
 				5C7A64F32BF87F7300D7A565 /* PlayerUITableViewCell.swift in Sources */,
 				5C7A64F72BF890EE00D7A565 /* TeamAddViewController.swift in Sources */,
 				5C7780182BFC9F3100CBA55C /* PlayerAddViewController.swift in Sources */,
+				5C6E4F172C01B7F900624435 /* SelectPlayerTableViewCell.swift in Sources */,
+				5C6E4F1B2C01FD0200624435 /* SelectTeamTableViewCell.swift in Sources */,
 				5C929EDF2BF702FF0096CD95 /* Team.swift in Sources */,
 				5C7A64EF2BF8725000D7A565 /* TeamDetailsViewController.swift in Sources */,
+				5C6E4F192C01FCD600624435 /* MatchSelectTeamTableViewController.swift in Sources */,
 				5CB1EE762C00442B00093775 /* TeamSelectPlayerTableViewCell.swift in Sources */,
 				5C799AE12BFB251D00C50AD2 /* MatchUITableViewController.swift in Sources */,
 				5C929EE12BF703090096CD95 /* Player.swift in Sources */,
