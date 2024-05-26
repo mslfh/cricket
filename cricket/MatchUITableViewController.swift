@@ -17,6 +17,13 @@ class MatchUITableViewController: UITableViewController {
     
     var matches = [Match]()
     
+    @IBAction func unwindScoreToMatchList(sender: UIStoryboardSegue)
+    {
+        matches = [Match]()
+        viewDidLoad()
+    }
+    
+    
     @IBAction func unwindToMatchList(sender: UIStoryboardSegue)
     {
         if let detailScreen = sender.source as? MatchDetailsViewController
@@ -42,13 +49,8 @@ class MatchUITableViewController: UITableViewController {
         viewDidLoad()
     }
     
-    
-    
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         let db = Firestore.firestore()
         let matchCollection = db.collection("matches")
         matchCollection.getDocuments() { (result, err) in
@@ -73,12 +75,11 @@ class MatchUITableViewController: UITableViewController {
                         self.matches.append(match)
                         
                     case .failure(let error):
-                     
+                        
                         print("Error decoding \(error)")
                     }
                 }
-                
-                //NOTE THE ADDITION OF THIS LINE
+    
                 self.tableView.reloadData()
             }
         }
@@ -97,6 +98,7 @@ class MatchUITableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "MatchUITableViewCell", for: indexPath)
 
         let match = matches[indexPath.row]

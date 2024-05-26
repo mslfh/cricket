@@ -59,8 +59,12 @@
 		5C929EDA2BF6FFF00096CD95 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C929ED92BF6FFF00096CD95 /* Match.swift */; };
 		5C929EDF2BF702FF0096CD95 /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C929EDE2BF702FF0096CD95 /* Team.swift */; };
 		5C929EE12BF703090096CD95 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C929EE02BF703090096CD95 /* Player.swift */; };
-		5C929EE32BF703120096CD95 /* History.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C929EE22BF703120096CD95 /* History.swift */; };
 		5C929EE52BF703F10096CD95 /* Ball.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C929EE42BF703F10096CD95 /* Ball.swift */; };
+		5C92F7822C036430009BED46 /* HistoryBall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92F7812C036430009BED46 /* HistoryBall.swift */; };
+		5C92F7842C03683E009BED46 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92F7832C03683E009BED46 /* HistoryTableViewCell.swift */; };
+		5C92F7862C036859009BED46 /* HistoryTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92F7852C036859009BED46 /* HistoryTableViewController.swift */; };
+		5C92F7882C036871009BED46 /* HistoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92F7872C036871009BED46 /* HistoryDetailViewController.swift */; };
+		5C92F78A2C036CFE009BED46 /* BallTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C92F7892C036CFE009BED46 /* BallTableViewCell.swift */; };
 		5CB1EE742C0043B200093775 /* TeamSelectPlayerTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB1EE732C0043B200093775 /* TeamSelectPlayerTableViewController.swift */; };
 		5CB1EE762C00442B00093775 /* TeamSelectPlayerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CB1EE752C00442B00093775 /* TeamSelectPlayerTableViewCell.swift */; };
 /* End PBXBuildFile section */
@@ -92,8 +96,12 @@
 		5C929ED92BF6FFF00096CD95 /* Match.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		5C929EDE2BF702FF0096CD95 /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
 		5C929EE02BF703090096CD95 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
-		5C929EE22BF703120096CD95 /* History.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = History.swift; sourceTree = "<group>"; };
 		5C929EE42BF703F10096CD95 /* Ball.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ball.swift; sourceTree = "<group>"; };
+		5C92F7812C036430009BED46 /* HistoryBall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryBall.swift; sourceTree = "<group>"; };
+		5C92F7832C03683E009BED46 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
+		5C92F7852C036859009BED46 /* HistoryTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewController.swift; sourceTree = "<group>"; };
+		5C92F7872C036871009BED46 /* HistoryDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryDetailViewController.swift; sourceTree = "<group>"; };
+		5C92F7892C036CFE009BED46 /* BallTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallTableViewCell.swift; sourceTree = "<group>"; };
 		5CB1EE732C0043B200093775 /* TeamSelectPlayerTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectPlayerTableViewController.swift; sourceTree = "<group>"; };
 		5CB1EE752C00442B00093775 /* TeamSelectPlayerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamSelectPlayerTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -165,6 +173,10 @@
 				5C929E952BF6FF910096CD95 /* Assets.xcassets */,
 				5C929E972BF6FF910096CD95 /* LaunchScreen.storyboard */,
 				5C929E9A2BF6FF910096CD95 /* Info.plist */,
+				5C92F7892C036CFE009BED46 /* BallTableViewCell.swift */,
+				5C92F7872C036871009BED46 /* HistoryDetailViewController.swift */,
+				5C92F7832C03683E009BED46 /* HistoryTableViewCell.swift */,
+				5C92F7852C036859009BED46 /* HistoryTableViewController.swift */,
 				5C6E4F162C01B7F900624435 /* SelectPlayerTableViewCell.swift */,
 				5C7A64EA2BF8693E00D7A565 /* TeamUITableViewCell.swift */,
 				5C7A64EC2BF86A9300D7A565 /* TeamUITableViewController.swift */,
@@ -191,8 +203,8 @@
 				5C929ED92BF6FFF00096CD95 /* Match.swift */,
 				5C929EDE2BF702FF0096CD95 /* Team.swift */,
 				5C929EE02BF703090096CD95 /* Player.swift */,
-				5C929EE22BF703120096CD95 /* History.swift */,
 				5C929EE42BF703F10096CD95 /* Ball.swift */,
+				5C92F7812C036430009BED46 /* HistoryBall.swift */,
 			);
 			path = entity;
 			sourceTree = "<group>";
@@ -306,15 +318,17 @@
 				5C6E4F1F2C021A3300624435 /* MatchScoreViewController.swift in Sources */,
 				5C929EE52BF703F10096CD95 /* Ball.swift in Sources */,
 				5C929E912BF6FF8F0096CD95 /* ViewController.swift in Sources */,
+				5C92F7842C03683E009BED46 /* HistoryTableViewCell.swift in Sources */,
 				5C929E8D2BF6FF8F0096CD95 /* AppDelegate.swift in Sources */,
 				5CB1EE742C0043B200093775 /* TeamSelectPlayerTableViewController.swift in Sources */,
-				5C929EE32BF703120096CD95 /* History.swift in Sources */,
 				5C929E8F2BF6FF8F0096CD95 /* SceneDelegate.swift in Sources */,
 				5C7A64EB2BF8693E00D7A565 /* TeamUITableViewCell.swift in Sources */,
 				5C7A64F32BF87F7300D7A565 /* PlayerUITableViewCell.swift in Sources */,
 				5C7A64F72BF890EE00D7A565 /* TeamAddViewController.swift in Sources */,
 				5C7780182BFC9F3100CBA55C /* PlayerAddViewController.swift in Sources */,
+				5C92F7862C036859009BED46 /* HistoryTableViewController.swift in Sources */,
 				5C6E4F172C01B7F900624435 /* SelectPlayerTableViewCell.swift in Sources */,
+				5C92F7882C036871009BED46 /* HistoryDetailViewController.swift in Sources */,
 				5C929EDF2BF702FF0096CD95 /* Team.swift in Sources */,
 				5C7A64EF2BF8725000D7A565 /* TeamDetailsViewController.swift in Sources */,
 				5CB1EE762C00442B00093775 /* TeamSelectPlayerTableViewCell.swift in Sources */,
@@ -324,8 +338,10 @@
 				5C7A64ED2BF86A9300D7A565 /* TeamUITableViewController.swift in Sources */,
 				5C799AE52BFB27F000C50AD2 /* MatchDetailsViewController.swift in Sources */,
 				5C7A64F12BF87F5F00D7A565 /* PlayerUITableViewController.swift in Sources */,
+				5C92F78A2C036CFE009BED46 /* BallTableViewCell.swift in Sources */,
 				5C799AE32BFB254200C50AD2 /* MatchUITableViewCell.swift in Sources */,
 				5C929EDA2BF6FFF00096CD95 /* Match.swift in Sources */,
+				5C92F7822C036430009BED46 /* HistoryBall.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

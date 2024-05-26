@@ -13,6 +13,7 @@ import FirebaseFirestoreSwift
 class MatchScoreViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource  {
 
     var match : Match?
+    var historyBall: HistoryBall?
     
     var batterPlayer: Player?
     var nextBatterPlayer: Player?
@@ -21,6 +22,10 @@ class MatchScoreViewController: UIViewController, UIPickerViewDelegate, UIPicker
     var avaliableBatterPlayers: [Player] = []
     var avaliableBowlerPlayers: [Player] = []
     
+    let outTypes = ["Bowled", "Caught", "Caught and Bowled", "Leg Before Wicket (LBW)", "Run Out", "Hit Wicket", "Stumping"]
+
+    
+    @IBOutlet weak var selectInfoLabel: UILabel!
     
     @IBOutlet weak var wicketLostLabel: UILabel!
     
@@ -51,10 +56,11 @@ class MatchScoreViewController: UIViewController, UIPickerViewDelegate, UIPicker
     
     @IBOutlet weak var bowlerLostLabel: UILabel!
     
-    
     @IBOutlet weak var batterPickerView: UIPickerView!
     
     @IBOutlet weak var bowlerPickerView: UIPickerView!
+    
+    @IBOutlet weak var outPickerView: UIPickerView!
     
     
     @IBOutlet weak var matchTitleLabel: UILabel!
@@ -64,82 +70,266 @@ class MatchScoreViewController: UIViewController, UIPickerViewDelegate, UIPicker
     @IBOutlet weak var bowlerTeamLabel: UILabel!
     
     
+    var totalRuns = 0
+    var wickets = 0
+    
+    var ballsDelivered = 0
+    var oversCompleted = 0
+    
+    var bowlerBalls = 0
+    var bowlerWickets = 0
+    var bowlerLost = 0
+    
+    var batterRuns = 0
+    var batterBalls = 0
+    
+    var nextbatterRuns = 0
+    var nextbatterBalls = 0
+    
+    
+    @IBAction func dotBallTapped(_ sender: Any) {
+        checkOver()
+        
+        bowlerBalls += 1
+        nextbatterBalls += 1
+        batterBalls += 1
+        bowlerBalls += 1
+        
+        ballsDelivered += 1
+        
+        // Check if it's the end of the over
+        if ballsDelivered % 6 == 0 {
+            
+            //choose new bowler
+            changeBowler()
+            oversCompleted += 1
+            ballsDelivered = 0
+        }
+        
+        //update UI
+        overLabel.text = "\(oversCompleted).\(ballsDelivered)"
+        
+        bowlerBallsLabel.text = "\(bowlerBalls)"
+        batterScoreLabel.text = "\(batterRuns)(\(batterBalls))"
+        nextBatterScoreLabel.text = "\(nextbatterRuns)(\(nextbatterBalls))"
+        recordBall(type: "Dot Ball")
+    }
+    
+    
     @IBAction func add1Tapped(_ sender: Any) {
+        
         addRunsToMatch(runs: 1, isNoBall: false, isWideBall: false)
+        recordBall(type: "Run 1")
     }
     
     @IBAction func add2Tapped(_ sender: Any) {
         addRunsToMatch(runs: 2, isNoBall: false, isWideBall: false)
-        exchangeBatter()
+        recordBall(type: "Run 2")
     }
     
     @IBAction func add3Tapped(_ sender: Any) {
         addRunsToMatch(runs: 3, isNoBall: false, isWideBall: false)
+        recordBall(type: "Run 3")
     }
     
     @IBAction func add4Tapped(_ sender: Any) {
         addRunsToMatch(runs: 4, isNoBall: false, isWideBall: false)
+        recordBall(type: "Boundary 4")
     }
     
     @IBAction func add5Tapped(_ sender: Any) {
         addRunsToMatch(runs: 5, isNoBall: false, isWideBall: false)
+        recordBall(type: "Run 5")
     }
     
     @IBAction func add6Tapped(_ sender: Any) {
         addRunsToMatch(runs: 6, isNoBall: false, isWideBall: false)
+        recordBall(type: "Boundary 6")
     }
     
     @IBAction func noBallTapped(_ sender: Any) {
         addRunsToMatch(runs: 1, isNoBall: true, isWideBall: false)
+        recordBall(type: "No Ball")
     }
     
     
     @IBAction func wideTapped(_ sender: Any) {
         addRunsToMatch(runs: 1, isNoBall: false, isWideBall: true)
+        recordBall(type: "Wide")
+    }
+    
+    
+    @IBAction func outTapped(_ sender: Any) {
+        
+        checkOver()
+        
+        bowlerBalls += 1
+        nextbatterBalls += 1
+        wickets += 1
+        bowlerWickets += 1
+        
+        ballsDelivered += 1
+        
+        // Check if it's the end of the over
+        if ballsDelivered % 6 == 0 {
+            //choose new bowler
+            changeBowler()
+            
+            oversCompleted += 1
+            ballsDelivered = 0
+        }
+        
+        //update UI
+        overLabel.text = "\(oversCompleted).\(ballsDelivered)"
+        wicketLostLabel.text = "\(wickets)"
+        
+        bowlerBallsLabel.text = "\(bowlerBalls)"
+        bowlerWicketsLabel.text = "\(bowlerWickets)"
+        
+        nextBatterScoreLabel.text = "\(nextbatterRuns)(\(nextbatterBalls))"
+        
+        outPickerView.reloadAllComponents()
+        outPickerView.isHidden = false
+        selectInfoLabel.isHidden = false
+        
+        recordBall(type: "Out")
+    }
+    
+    
+    func recordBall(type: String) {
+        
+        guard let match = match else { return }
+        let ball = Ball(title: "\(oversCompleted).\(ballsDelivered)", type: type)
+        if historyBall?.balls == nil {
+            historyBall?.balls = []
+        }
+        historyBall?.balls?.append(ball)
     }
     
     func addRunsToMatch(runs: Int, isNoBall: Bool, isWideBall: Bool) {
-            // Update total runs
-            var totalRuns = Int(totalRunsLabel.text ?? "0") ?? 0
-            totalRuns += runs
-            totalRunsLabel.text = "\(totalRuns)"
-            
-            // Update extras
-            if isNoBall || isWideBall {
-                var extras = Int(extraLabel.text ?? "0") ?? 0
-                extras += 1
-                extraLabel.text = "\(extras)"
-            }
-            
-            // Update boundaries if 4 or 6
-            if runs == 4 || runs == 6 {
-                var boundaries = Int(boundariesLabel.text ?? "0") ?? 0
-                boundaries += 1
-                boundariesLabel.text = "\(boundaries)"
-            }
-            
-            // Update batter's score
-            var batterScore = Int(batterScoreLabel.text ?? "0") ?? 0
-            batterScore += runs
-            batterScoreLabel.text = "\(batterScore)"
-            
-            // Update bowler's stats
-            if !isNoBall && !isWideBall {
-                var bowlerBalls = Int(bowlerBallsLabel.text ?? "0") ?? 0
-                bowlerBalls += 1
-                bowlerBallsLabel.text = "\(bowlerBalls)"
-            }
-            
-            // Update over
-            let totalBalls = Int(bowlerBallsLabel.text ?? "0") ?? 0
-            let overs = totalBalls / 6
-            let balls = totalBalls % 6
-            overLabel.text = "\(overs).\(balls)"
-            
-            // Update run rate
-            let runRate = (Double(totalRuns) / Double(totalBalls)) * 6.0
-            runRateLabel.text = String(format: "%.2f", runRate)
+        
+        if(!selectInfoLabel.isHidden){
+            return
         }
+        
+        checkOver()
+        
+        // Update extras
+        if isNoBall || isWideBall {
+            var extras = Int(extraLabel.text ?? "0") ?? 0
+            extras += 1
+            extraLabel.text = "\(extras)"
+            totalRuns += 1
+            totalRunsLabel.text = "\(totalRuns)"
+            return
+        }
+        
+        
+        // update ball
+        bowlerBalls += 1
+        batterBalls += 1
+        nextbatterBalls += 1
+        ballsDelivered += 1
+        
+        // Check if it's the end of the over
+        if ballsDelivered % 6 == 0 {
+            
+            //choose new bowler
+            changeBowler()
+            
+            oversCompleted += 1
+            ballsDelivered = 0
+        }
+       
+        // update runs
+        totalRuns += runs
+        bowlerLost += runs
+        batterRuns += runs
+        
+        if ( runs == 2 || runs == 4 || runs == 6){
+            nextbatterRuns += 1
+        }
+        
+        // Update boundaries if 4 or 6
+        if (runs == 4 || runs == 6 ){
+            var boundaries = Int(boundariesLabel.text ?? "0") ?? 0
+            boundaries += 1
+            boundariesLabel.text = "\(boundaries)"
+        }
+        
+        //update UI
+        totalRunsLabel.text = "\(totalRuns)"
+        
+        overLabel.text = "\(oversCompleted).\(ballsDelivered)"
+        
+        bowlerBallsLabel.text = String(bowlerBalls)
+        bowlerLostLabel.text = String(bowlerLost)
+        
+        batterScoreLabel.text = "\(batterRuns)(\(batterBalls))"
+        
+        nextBatterScoreLabel.text = "\(nextbatterRuns)(\(nextbatterBalls))"
+        
+            
+        // Update run rate
+        let totalOvers = Double(oversCompleted) + Double(ballsDelivered) / 6.0
+        let runRate = Double(totalRuns) / totalOvers
+        runRateLabel.text = String(format: "%.2f", runRate)
+        
+        //check exchangeBatter
+        if (runs == 1 || runs == 3 || runs == 5){
+            exchangeBatter()
+        }
+      
+    }
+    
+    func checkOver() {
+        if (ballsDelivered == 5 &&  oversCompleted == 5) || avaliableBatterPlayers.count == 0 {
+           
+            let alertController = UIAlertController(title: "Game Over", message: "The game is over.", preferredStyle: .alert)
+                    
+            let mainMenuAction = UIAlertAction(title: "OK", style: .cancel) { _ in
+                self.dismiss(animated: true, completion: {
+                    self.saveHistoryBallAndDeleteMatch()
+                    self.performSegue(withIdentifier: "gameOverSegue", sender: self)
+                })
+            }
+        
+            alertController.addAction(mainMenuAction)
+            
+            present(alertController, animated: true, completion: nil)
+        }
+    }
+    
+    func saveHistoryBallAndDeleteMatch() {
+        guard let match = match else { return }
+        
+        
+        historyBall?.matchTitle = match.title
+        historyBall?.batterTeam = match.batterTeamName
+        historyBall?.bowlerTeam = match.bowlerTeamName
+        historyBall?.finalScore = "\(wickets)/\(totalRuns)"
+        
+        guard let historyBall = historyBall else { return }
+        
+        let db = Firestore.firestore()
+        
+        // Save the history ball
+        do {
+            try db.collection("HistoryBalls").document(historyBall.documentID ?? UUID().uuidString).setData(from: historyBall)
+        } catch {
+            print("Error saving history ball: \(error)")
+        }
+        
+        // Delete the match document
+        db.collection("matches").document(match.documentID ?? "").delete { error in
+            if let error = error {
+                print("Error deleting match: \(error)")
+            } else {
+                print("Match successfully deleted")
+            }
+        }
+    }
+
     
     func exchangeBatter(){
         
@@ -154,20 +344,18 @@ class MatchScoreViewController: UIViewController, UIPickerViewDelegate, UIPicker
         batterNameLabel.text = nextBatterLabel.text
         nextBatterLabel.text  = name
         
-        
         let score = batterScoreLabel.text
         batterScoreLabel.text = nextBatterScoreLabel.text
         nextBatterScoreLabel.text  = score
-        
     }
     
-    
-    
-    @IBAction func changeBatterButtonTapped(_ sender: Any) {
+    func changeBatter() {
+        //choose new batter as current batter player
         batterPickerView.isHidden = false
+        selectInfoLabel.isHidden = false
     }
     
-    @IBAction func changeBowlerButtonTapped(_ sender: Any) {
+    func changeBowler() {
         // Filter out the current bowler player from the list temporarily
         var availableBowlerPlayersForSelection = avaliableBowlerPlayers
         if let currentBowler = bowlerPlayer {
@@ -177,14 +365,23 @@ class MatchScoreViewController: UIViewController, UIPickerViewDelegate, UIPicker
         avaliableBowlerPlayers = availableBowlerPlayersForSelection
         bowlerPickerView.reloadAllComponents()
         bowlerPickerView.isHidden = false
+        selectInfoLabel.isHidden = false
     }
     
     override func viewDidLoad() {
             super.viewDidLoad()
+        
+           
+            historyBall = HistoryBall()
+            
+        
             batterPickerView.delegate = self
             bowlerPickerView.delegate = self
+            outPickerView.delegate = self
             batterPickerView.isHidden = true
             bowlerPickerView.isHidden = true
+            selectInfoLabel.isHidden = true
+            outPickerView.isHidden = true
             if let match = match {
                 matchTitleLabel.text = match.title
                 batterTeamLabel.text = match.batterTeamName
@@ -194,7 +391,16 @@ class MatchScoreViewController: UIViewController, UIPickerViewDelegate, UIPicker
                     self.avaliableBatterPlayers = players
                     
                     if(self.avaliableBatterPlayers.count == 5){
+                       
+                        self.batterPlayer =  self.avaliableBatterPlayers[0]
+                        self.avaliableBatterPlayers.remove(at: 0)
+                        self.nextBatterPlayer =  self.avaliableBatterPlayers[0]
+                        self.avaliableBatterPlayers.remove(at: 0)
+                        self.batterNameLabel.text = self.batterPlayer?.name
+                        self.nextBatterLabel.text = self.nextBatterPlayer?.name
+                        
                         self.batterPickerView.reloadAllComponents()
+                        
                     }
                       
                 }
@@ -202,9 +408,12 @@ class MatchScoreViewController: UIViewController, UIPickerViewDelegate, UIPicker
                 fetchPlayersForTeam(teamId: match.bowlerTeamId) { players in
                     self.avaliableBowlerPlayers = players
                     if(self.avaliableBowlerPlayers.count == 5){
+                       
+                        self.bowlerPlayer =  self.avaliableBowlerPlayers[0]
+                        self.bowlerNameLabel.text = self.bowlerPlayer?.name
+                        
                         self.bowlerPickerView.reloadAllComponents()
                     }
-                     
                 }
             }
         }
@@ -254,33 +463,56 @@ class MatchScoreViewController: UIViewController, UIPickerViewDelegate, UIPicker
        func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
            if pickerView == batterPickerView {
                return avaliableBatterPlayers.count
-           } else {
+           } else if pickerView == bowlerPickerView {
                return avaliableBowlerPlayers.count
+           } else if pickerView == outPickerView {
+               return outTypes.count
            }
+           return 0
        }
        
        func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
            if pickerView == batterPickerView {
                return avaliableBatterPlayers[row].name
-           } else {
+           } else if pickerView == bowlerPickerView {
                return avaliableBowlerPlayers[row].name
+           } else if pickerView == outPickerView {
+               return outTypes[row]
            }
+           return nil
        }
        
        func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
            if pickerView == batterPickerView {
                batterPlayer = avaliableBatterPlayers[row]
                avaliableBatterPlayers.remove(at: row)
-               // Now reload the picker view to update the options
                batterPickerView.reloadAllComponents()
+               selectInfoLabel.isHidden = true
                batterPickerView.isHidden = true
-           } else {
+               batterRuns = 0
+               batterBalls = 0
+               batterNameLabel.text = batterPlayer?.name
+               batterScoreLabel.text = "0(0)"
+           } else if pickerView == bowlerPickerView {
                if let currentBowler = bowlerPlayer {
                    avaliableBowlerPlayers.append(currentBowler)
                }
-              
                bowlerPlayer = avaliableBowlerPlayers[row]
+               selectInfoLabel.isHidden = true
                bowlerPickerView.isHidden = true
+               bowlerBalls = 0
+               bowlerWickets = 0
+               bowlerLost = 0
+               bowlerBallsLabel.text = "0"
+               bowlerWicketsLabel.text = "0"
+               bowlerLostLabel.text = "0"
+               bowlerNameLabel.text = bowlerPlayer?.name
+           } else if pickerView == outPickerView {
+               let selectedOutType = outTypes[row]
+               // Handle the selected out type if needed
+               outPickerView.isHidden = true
+               batterPickerView.isHidden = false
+               batterPickerView.reloadAllComponents()
            }
        }
 
