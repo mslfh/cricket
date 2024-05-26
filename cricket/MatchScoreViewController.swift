@@ -21,19 +21,152 @@ class MatchScoreViewController: UIViewController, UIPickerViewDelegate, UIPicker
     var avaliableBatterPlayers: [Player] = []
     var avaliableBowlerPlayers: [Player] = []
     
+    
+    @IBOutlet weak var wicketLostLabel: UILabel!
+    
+    @IBOutlet weak var totalRunsLabel: UILabel!
+    
+    @IBOutlet weak var overLabel: UILabel!
+    
+    @IBOutlet weak var runRateLabel: UILabel!
+    
+    @IBOutlet weak var extraLabel: UILabel!
+    
+    @IBOutlet weak var boundariesLabel: UILabel!
+    
+    @IBOutlet weak var batterNameLabel: UILabel!
+    
+    @IBOutlet weak var nextBatterLabel: UILabel!
+    
+    @IBOutlet weak var batterScoreLabel: UILabel!
+    
+    @IBOutlet weak var nextBatterScoreLabel: UILabel!
+    
+    
+    @IBOutlet weak var bowlerNameLabel: UILabel!
+    
+    @IBOutlet weak var bowlerBallsLabel: UILabel!
+    
+    @IBOutlet weak var bowlerWicketsLabel: UILabel!
+    
+    @IBOutlet weak var bowlerLostLabel: UILabel!
+    
+    
     @IBOutlet weak var batterPickerView: UIPickerView!
     
     @IBOutlet weak var bowlerPickerView: UIPickerView!
+    
     
     @IBOutlet weak var matchTitleLabel: UILabel!
     
     @IBOutlet weak var batterTeamLabel: UILabel!
     
     @IBOutlet weak var bowlerTeamLabel: UILabel!
-
+    
+    
+    @IBAction func add1Tapped(_ sender: Any) {
+        addRunsToMatch(runs: 1, isNoBall: false, isWideBall: false)
+    }
+    
+    @IBAction func add2Tapped(_ sender: Any) {
+        addRunsToMatch(runs: 2, isNoBall: false, isWideBall: false)
+        exchangeBatter()
+    }
+    
+    @IBAction func add3Tapped(_ sender: Any) {
+        addRunsToMatch(runs: 3, isNoBall: false, isWideBall: false)
+    }
+    
+    @IBAction func add4Tapped(_ sender: Any) {
+        addRunsToMatch(runs: 4, isNoBall: false, isWideBall: false)
+    }
+    
+    @IBAction func add5Tapped(_ sender: Any) {
+        addRunsToMatch(runs: 5, isNoBall: false, isWideBall: false)
+    }
+    
+    @IBAction func add6Tapped(_ sender: Any) {
+        addRunsToMatch(runs: 6, isNoBall: false, isWideBall: false)
+    }
+    
+    @IBAction func noBallTapped(_ sender: Any) {
+        addRunsToMatch(runs: 1, isNoBall: true, isWideBall: false)
+    }
+    
+    
+    @IBAction func wideTapped(_ sender: Any) {
+        addRunsToMatch(runs: 1, isNoBall: false, isWideBall: true)
+    }
+    
+    func addRunsToMatch(runs: Int, isNoBall: Bool, isWideBall: Bool) {
+            // Update total runs
+            var totalRuns = Int(totalRunsLabel.text ?? "0") ?? 0
+            totalRuns += runs
+            totalRunsLabel.text = "\(totalRuns)"
+            
+            // Update extras
+            if isNoBall || isWideBall {
+                var extras = Int(extraLabel.text ?? "0") ?? 0
+                extras += 1
+                extraLabel.text = "\(extras)"
+            }
+            
+            // Update boundaries if 4 or 6
+            if runs == 4 || runs == 6 {
+                var boundaries = Int(boundariesLabel.text ?? "0") ?? 0
+                boundaries += 1
+                boundariesLabel.text = "\(boundaries)"
+            }
+            
+            // Update batter's score
+            var batterScore = Int(batterScoreLabel.text ?? "0") ?? 0
+            batterScore += runs
+            batterScoreLabel.text = "\(batterScore)"
+            
+            // Update bowler's stats
+            if !isNoBall && !isWideBall {
+                var bowlerBalls = Int(bowlerBallsLabel.text ?? "0") ?? 0
+                bowlerBalls += 1
+                bowlerBallsLabel.text = "\(bowlerBalls)"
+            }
+            
+            // Update over
+            let totalBalls = Int(bowlerBallsLabel.text ?? "0") ?? 0
+            let overs = totalBalls / 6
+            let balls = totalBalls % 6
+            overLabel.text = "\(overs).\(balls)"
+            
+            // Update run rate
+            let runRate = (Double(totalRuns) / Double(totalBalls)) * 6.0
+            runRateLabel.text = String(format: "%.2f", runRate)
+        }
+    
+    func exchangeBatter(){
+        
+        // Swap the current batter and next batter
+        let tempBatter = batterPlayer
+        batterPlayer = nextBatterPlayer
+        nextBatterPlayer = tempBatter
+        
+        // Update the UI with the new batter information
+        
+        let name = batterNameLabel.text
+        batterNameLabel.text = nextBatterLabel.text
+        nextBatterLabel.text  = name
+        
+        
+        let score = batterScoreLabel.text
+        batterScoreLabel.text = nextBatterScoreLabel.text
+        nextBatterScoreLabel.text  = score
+        
+    }
+    
+    
+    
     @IBAction func changeBatterButtonTapped(_ sender: Any) {
         batterPickerView.isHidden = false
     }
+    
     @IBAction func changeBowlerButtonTapped(_ sender: Any) {
         // Filter out the current bowler player from the list temporarily
         var availableBowlerPlayersForSelection = avaliableBowlerPlayers
